@@ -7,7 +7,7 @@ This code is released in support of the above manuscript, which is currently und
 
 All code used to generate model-based results is in this repository. The structure is as follows:
 - The Python library code is in `covasim_es`. 
-- Script files used to run and process the simulations for Malawi are in `malawi_scripts`. These scripts are computationally intensive, requiring roughly 1,000 core-hours on a high-performance compute cluster. Do not try to run on your laptop without first setting `debug = True`. The main file used to generate the results is `sweep_lines.py`, but other scripts are included for completeness.
+- Script files used to run and process the simulations for Malawi are in `malawi_scripts`. The main file used to generate the results is `sweep_lines.py`, but other scripts are included for completeness. These scripts are computationally intensive, requiring roughly 140 core-hours on a high-performance compute cluster. Do not try to run on your laptop without first setting `debug = True`. 
 - Equivalent scripts for Nepal are in `nepal_scripts`.
 - Scripts used to produce the figures in the manuscript are in `figures`.
 - The pre-generated data files loaded by the scripts are stored in `results`. These are in compressed binary format, but can be loaded as pandas dataframes (and then exported to Excel if desired) using [Sciris](https://sciris.org) (specifically, `sc.load()`).
