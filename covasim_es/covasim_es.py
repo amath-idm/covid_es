@@ -12,10 +12,7 @@ __all__ = ['ES', 'beta_threshold', 'dalys', 'Experiment']
 
 
 class ES(cv.Intervention):
-    """
-    Run an environmental surveillance program
-    """
-
+    """ Run an environmental surveillance program """
     def __init__(self, prev_thresh, sensitivity=1, specificity=1, frequency=1, n_samples=1, lag=4, verbose=True, **kwargs):
         super().__init__(**kwargs)
         self.thresh = prev_thresh
@@ -30,7 +27,6 @@ class ES(cv.Intervention):
         self.sample_dates = list()
         self.rng = np.random.RandomState(0)
         return
-
 
     def apply(self, sim):
         if not (sim.t % self.freq):
@@ -53,10 +49,7 @@ class ES(cv.Intervention):
 
 
 class beta_threshold(cv.Intervention):
-    """
-    Reduce beta after a certain level of detections
-    """
-
+    """ Reduce beta after a certain level of detections """
     def __init__(self, change, clin_trigger=10, es_trigger=1, verbose=True, **kwargs):
         super().__init__(**kwargs)
         self.change = change
@@ -69,9 +62,7 @@ class beta_threshold(cv.Intervention):
         self.days = []
         return
 
-
     def apply(self, sim):
-
         es = sim.get_intervention(ES)
         if len(es.detections):
             es_detect = es.detections[-1]
@@ -97,7 +88,7 @@ class beta_threshold(cv.Intervention):
 
 
 class dalys(cv.Analyzer):
-
+    """ Calculate the COVID-related DALYs """
     def __init__(self, max_age=84, short_covid=None, long_covid=None, **kwargs):
         super().__init__(**kwargs)
         self.max_age = max_age
@@ -118,7 +109,6 @@ class dalys(cv.Analyzer):
         pass
 
     def finalize(self, sim):
-
         scale = sim['pop_scale']
 
         # Years of life lost
@@ -143,7 +133,6 @@ class dalys(cv.Analyzer):
 
 class progress(cv.Analyzer):
     """ Save progress to a file """
-
     def apply(self, sim):
         pass
 
@@ -163,6 +152,8 @@ class reset_rng(cv.Intervention):
             print(f'Could not set seed {seed}')
         return 
 
+
+#%% Define parameters
 
 # Define the column names
 column_info = {
@@ -320,6 +311,7 @@ def run_sim(sim, load=True):
     return sim
 
 
+#%% Experiment class
 class Experiment(sc.prettyobj):
     """
     Define and run an ES experiment.
@@ -346,7 +338,6 @@ class Experiment(sc.prettyobj):
         self.results = None
         return
 
-
     def rand_sample(self):
         """ Draw a uniform sample for the values in the scenario """
         pars = sc.objdict()
@@ -360,7 +351,6 @@ class Experiment(sc.prettyobj):
                 val = np.random.uniform(low, high)
             pars[k] = val
         return pars
-
 
     def create_sim(self, scen):
         """ Create a single sim """
@@ -408,7 +398,6 @@ class Experiment(sc.prettyobj):
 
         return sim
 
-
     def create_grid_sims(self):
         self.sims = list()
         base_scen = sc.mergedicts(default_grid_scen, self.scen)
@@ -433,7 +422,6 @@ class Experiment(sc.prettyobj):
         self.sims = sc.parallelize(self.create_sim, scens)
         return
 
-
     def create_rand_sims(self):
         self.sims = list()
         count = 0
@@ -452,11 +440,9 @@ class Experiment(sc.prettyobj):
                 self.sims.append(sim)
         return
 
-
     def default_scen(self):
         scen = sc.objdict({k:v[0] for k,v in self.scen.items()}) # Pull out default scenario
         return scen
-    
     
     def create_line_sims(self):
         self.sims = list()
@@ -490,7 +476,6 @@ class Experiment(sc.prettyobj):
         self.sims = sc.parallelize(self.create_sim, scens)
         return
 
-
     def create_sims(self):
         """ Create all simulations """
         if self.method == 'grid':
@@ -501,13 +486,11 @@ class Experiment(sc.prettyobj):
             self.create_line_sims()
         return self
     
-    
     def run_sims(self, die=False, **kwargs):
         """ Run all sims in parallel """
         sims_done = sc.parallelize(run_sim, self.sims, die=die, load=self.load, **kwargs)
         self.sims_done = sims_done
         return
-
 
     def run(self, n=None, **kwargs):
         """ Run the simulations in parallel """
@@ -523,7 +506,6 @@ class Experiment(sc.prettyobj):
         self.compute_results()
         self.timer.toc()
         return self
-
 
     def compute_results(self):
         """ Parse the sim results into a dataframe """
@@ -547,7 +529,6 @@ class Experiment(sc.prettyobj):
             res += entry
         self.results = sc.dataframe(res)
         return
-
 
     def export(self, filename=None, write_info=True, sheetname='Column info'):
         """ Export results to XLSX """
