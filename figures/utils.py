@@ -44,7 +44,7 @@ def load_data(filters=None, do_filter=None, which='df', default=False, verbose=F
         if default:
             filters = sc.dcp(default_filter[loc])
         filters = sc.mergedicts(filters)
-        path = sc.thispath() / f'../{loc}_scripts/{loc}_oct23_esd_raw.df'
+        path = sc.thispath() / f'../results/{loc}_esd_raw.df'
         raw = sc.load(path)
         df = raw[which]
         for key,val in filters.items():
