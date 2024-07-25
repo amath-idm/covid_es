@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 # Get version
 cwd = os.path.abspath(os.path.dirname(__file__))
-version = '0.1'
+version = '1.0.0'
 
 # Get the documentation
 with open(os.path.join(cwd, 'README.md'), "r") as fh:
@@ -16,17 +16,17 @@ CLASSIFIERS = [
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    "Development Status :: 4 - Beta",
-    "Programming Language :: Python :: 3.9",
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3.11",
 ]
 
 setup(
     name             = "covasim_es",
-    author           = "Mercy Mvundura, Lucky Ngwira, Jillian Gauld, Cliff Kerr",
+    author           = "Mercy Mvundura, Lucky G. Ngwira, Kabita Bade Shrestha, Reshma Tuladhar, Jillian Gauld, Cliff Kerr, Kayla Barnes, Bhawana Sharma, Nicholas Feasey",
     author_email     = "info@covasim.org",
-    description      = "Malawi ES exploration",
+    description      = "Malawi ES manuscript",
     url              = 'http://covasim.org',
-    keywords         = ["COVID-19", "Covasim", "Malawi", "environmental surveillance"],
+    keywords         = ["COVID-19", "Covasim", "Malawi", "Nepal", "environmental surveillance"],
     install_requires = [
         "covasim",
     ],
