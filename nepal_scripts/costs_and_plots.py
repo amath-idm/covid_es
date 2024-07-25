@@ -223,8 +223,6 @@ labels = {
 final_cols = []
 nlist = []
 z = 1.96 # Convert from e.g. an SEM to a 95% confidence interval
-# qlow = 0.025
-# qhigh = 0.975
 for col in par_cols:
     unique = esd[col].unique()
     n = len(unique)
@@ -240,7 +238,6 @@ for i, (col,n) in enumerate(zip(final_cols, nlist)):
     x = np.arange(n)
         
     # Filter out non-relevant default values
-    #esd[esd.valid_icer].groupby(col) # For removing invalid ICERs (deprecated)
     valid = (esd[col] != defaults[col]) | all_defaults # Pull out valid rows
     thisesd = esd[valid]
     
@@ -254,8 +251,6 @@ for i, (col,n) in enumerate(zip(final_cols, nlist)):
         else:
             low  = best - g.std()*z
             high = best + g.std()*z
-        # low  = g.quantile(qlow)
-        # high = g.quantile(qhigh)
     else:
         best = g.mean()
         if use_sem:
@@ -340,9 +335,6 @@ if do_save:
     esd.to_excel(f'{stem}cea.xlsx')
     stats.to_excel(f'{stem}stats.xlsx')
     sumstats.to_excel(f'{stem}summary.xlsx')
-    # es0.to_excel(f'{stem}no_es.xlsx')
-    # es1.to_excel(f'{stem}with_es.xlsx')
-    # df.to_excel(f'{stem}raw.xlsx')
     
 
 #%% Print out results

@@ -41,18 +41,18 @@ def unif(low, high):
 c = sc.objdict()
 n_months = 6
 year_factor = 12/n_months
-per_capita_gdp = 411 # Lucky email 2022/05/23
+per_capita_gdp = 411 # Local source 2022/05/23
 covid_prod_loss_mild = 0.10 # Estimate
 covid_prod_loss_severe = 0.50 # Estimate
 intervention_prod_loss = 0.1 # Estimate
 pop_size = 1e6
-mild_days = 5#unif(3,7)
-severe_days = 21.5#unif(15, 28)
+mild_days = 5
+severe_days = 21.5
 age_dist = cv.data.get_age_distribution(country)
 working_frac = age_dist[sc.findinds((age_dist[:,0] >= 20) * (age_dist[:,0] < 60)),-1].sum()
 working_pop = pop_size*working_frac
 c.severe = 43.36
-c.mild = 1.99 # Lucky email 2022/05/23
+c.mild = 1.99 # Local source 2022/05/23
 c.es_base = 5476 # From es_costs_calc
 c.es_per_sample = 58.25
 c.test = 1
@@ -222,8 +222,6 @@ labels = {
 final_cols = []
 nlist = []
 z = 1.96 # Convert from e.g. an SEM to a 95% confidence interval
-# qlow = 0.025
-# qhigh = 0.975
 for col in par_cols:
     unique = esd[col].unique()
     n = len(unique)
@@ -239,7 +237,6 @@ for i, (col,n) in enumerate(zip(final_cols, nlist)):
     x = np.arange(n)
         
     # Filter out non-relevant default values
-    #esd[esd.valid_icer].groupby(col) # For removing invalid ICERs (deprecated)
     valid = (esd[col] != defaults[col]) | all_defaults # Pull out valid rows
     thisesd = esd[valid]
     
@@ -253,8 +250,6 @@ for i, (col,n) in enumerate(zip(final_cols, nlist)):
         else:
             low  = best - g.std()*z
             high = best + g.std()*z
-        # low  = g.quantile(qlow)
-        # high = g.quantile(qhigh)
     else:
         best = g.mean()
         if use_sem:
@@ -339,9 +334,6 @@ if do_save:
     esd.to_excel(f'{stem}cea.xlsx')
     stats.to_excel(f'{stem}stats.xlsx')
     sumstats.to_excel(f'{stem}summary.xlsx')
-    # es0.to_excel(f'{stem}no_es.xlsx')
-    # es1.to_excel(f'{stem}with_es.xlsx')
-    # df.to_excel(f'{stem}raw.xlsx')
     
 
 #%% Print out results
