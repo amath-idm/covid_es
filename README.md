@@ -1,6 +1,7 @@
 # Cost-effectiveness of wastewater-based environmental surveillance for SARS-CoV-2 in Blantyre, Malawi and Kathmandu, Nepal: a model-based study
 
-This code is released in support of the above manuscript, which is currently under review. The full citation will be added upon acceptance.
+This code is released in support of the following manuscript:
+> Mvundura M, Ngwira LG, Shrestha KB, Tuladhar R, Gauld J, Kerr C, Barnes K, Anscombe C, Sharma B, Feasey N. Cost-effectiveness of wastewater-based environmental surveillance for SARS-CoV-2 in Blantyre, Malawi and Kathmandu, Nepal: A model-based study. *PLOS Glob Public Health*. 2025 Apr 24;5(4):e0004439. doi: https://10.1371/journal.pgph.0004439. PMID: 40273116; PMCID: PMC12021199.
 
 
 ## Structure
